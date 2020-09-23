@@ -1,11 +1,11 @@
 (ns burrows-wheeler
   (:require [clojure.string :as string]))
 
+;;;; A Clojure implementation of the Burrows-Wheeler Transform
+
 (defn rotate-string [s i]
   (let [len (count s)]
     (str (subs s i len) (subs s 0 (mod i len)))))
-
-;;;; A Clojure implementation of the Burrows-Wheeler Transform
 
 ;; This should run in O(n), but using Clojure's built-in sorting function yields O(n^2)
 (defn bwt [s]
@@ -17,7 +17,7 @@
          (map #(nth s (mod (+ % (dec len)) len)))
          (apply str)))) 
 
-;; Apparently this does not necessarily have to call sort at all
+;; Supposedly this does not necessarily have to call sort at all
 (defn ibwt [s]
   (loop [i (dec (count s))
          result (string/split s #"")]
